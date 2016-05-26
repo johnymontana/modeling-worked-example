@@ -25,7 +25,7 @@ RETURN otherPerson.name, commonEvents
 
 == Materialising the latent social graph
 
-In this next section we're going to materialise this inferred social network and create a `FRIENDS` relationship between people who have been to 7 or more of the same events.
+In this next section we're going to materialise this inferred social network and create a `FRIENDS` relationship between people who have been to 3 or more of the same events.
 
 We'll have to run a graph global query to materialise this inferred social network so we're going to process members in batches.
 
@@ -34,7 +34,7 @@ Run the following query.
 
 [source,cypher]
 ----
-MATCH (m:Member) WHERE size( (m)-[:RSVPD]->() ) >= 7
+MATCH (m:Member) WHERE size( (m)-[:RSVPD]->() ) >= 3
 SET m:Process
 RETURN count(*)
 ----
@@ -58,7 +58,7 @@ WITH m1
 MATCH (m1)-[:RSVPD]->(event)<-[:RSVPD]-(m2)
 
 WITH m1, m2, COUNT(*) AS times
-WHERE times >= 5
+WHERE times >= 3
 
 MERGE (m1)-[:FRIENDS]-(m2)
 RETURN count(*);
@@ -78,7 +78,7 @@ Run the following query but be patient, it's got a lot of friendships to make!
 call apoc.periodic.commit("
   MATCH (m1:Process) WITH m1 LIMIT {limit} REMOVE m1:Process
   WITH m1 MATCH (m1)-[:RSVPD]->(event)<-[:RSVPD]-(m2)
-  WITH m1, m2, COUNT(*) AS times WHERE times >= 5
+  WITH m1, m2, COUNT(*) AS times WHERE times >= 3
   MERGE (m1)-[:FRIENDS]-(m2) RETURN count(*)
 ",{limit:500})
 ----

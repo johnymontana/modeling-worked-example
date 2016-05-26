@@ -133,8 +133,6 @@ ifdef::env-training[]
 image::{img}/slides.jpg[]
 pass:a[<a play-topic='{guides}/03_inferred_answers.html'>Answers: Inferring interests</a>]
 
-pass:a[<a play-topic='{guides}/03_inferred_answers.html'>Answers: Inferred Interests</a>]
-
 endif::env-training[]
 
 == Persisting inferred interests
@@ -177,13 +175,9 @@ ____
 
 But now we've added in some extra relationships which allow us to make recommendations even to people like Aleks who haven't specified any interests.
 
-Run the following query: 
+Run the following query:
 
 include::form.adoc[tags=name]
-
-++++
-<label>Name:</label> <input value-for="name" class="form-control" value="A Name">
-++++
 
 [source,cypher,subs="attributes,none"]
 ----
